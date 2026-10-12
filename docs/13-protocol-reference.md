@@ -858,20 +858,20 @@ Direct button is reserved by firmware for Combine Inputs.
 
 The Solo values in this section come from
 [SunsetSH/focusmute](https://github.com/SunsetSH/focusmute), an Apache-2.0
-derivative of this project, and from its `docs/20-ledtest.md` panel sweep. A
-second Solo, in
-[HevarHal/Focusmute-Solo-Build](https://github.com/HevarHal/Focusmute-Solo-Build),
-confirms the number LEDs (4, 12) and Direct (27, 31) and supplies the halo
-ranges; its README states the map was confirmed on its owner's device, with no
-sweep log published. Neither has been verified here: there is no Solo on this
-bench.
+derivative of this project, and from its `docs/20-ledtest.md` panel sweep. That
+sweep saw nothing at LEDs 5, 12 and 13. A second Solo, from
+[HevarHal/Focusmute-Solo-Build](https://github.com/HevarHal/Focusmute-Solo-Build)
+and also on firmware 2.0.2417.0, was walked with `focusmute-cli map --output`
+([JSON and `probe` output](https://github.com/HevarHal/Focusmute-Solo-Build/commit/19333e0552566129b90926af2c9e3e548bfa729e#commitcomment-204514210)).
+It matches every index in the table above, 5, 12 and 13 included, and marks
+LEDs 1, 20–23 and 28–30 N/A. Its schema reports `kNUMBER_METERING_SEGMENTS` =
+14: two 7-segment input halos and no output halo. Neither device has been
+verified here: there is no Solo on this bench.
 
-Two caveats worth carrying. The sweep recorded no visible change at LEDs 5, 12
-and 13, most likely because the firmware repaints the input zone from the live
-signal, so those three rest on the second report and the 8-LED stride. The
-white restore colour is the 2i2's, tuned by eye against that panel and not
-re-tuned against a Solo. The offsets in the table further up come from the
-first device only.
+Two caveats worth carrying. The white restore colour is the 2i2's, tuned by eye
+against that panel and not re-tuned against a Solo. Of the offsets in the table
+further up, the second device's schema confirms only `directLEDValues` (88, 32
+entries); the rest come from the first device.
 
 Nothing loads a layout at runtime, so a wrong index here is a code change, not
 a config change. `focusmute-cli map` flashes one LED at a time and records what
