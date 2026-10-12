@@ -57,7 +57,7 @@ sudo apt-get install gcc-mingw-w64-x86-64
 
 **Linux native prerequisites** (PulseAudio + GTK + tray dependencies):
 ```
-sudo apt-get install libpulse-dev pkg-config libasound2-dev libgtk-3-dev libxdo-dev libappindicator3-dev libssl-dev
+sudo apt-get install libpulse-dev pkg-config libasound2-dev libgtk-3-dev libappindicator3-dev libssl-dev
 ```
 
 ### Build Outputs

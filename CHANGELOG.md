@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Dependency refresh: `tray-icon` 0.26, `muda` 0.21, `dirs` 7, plus `clap` and `notify-rust` patches. The Windows notification stack no longer pulls in `quick-xml` 0.37 (RUSTSEC-2026-0194, RUSTSEC-2026-0195), and building on Linux no longer needs `libxdo-dev`
 - Descriptor offsets for the LED write path, `enableDirectLEDMode` and `selectedInput` now come from the firmware schema instead of the Scarlett 2i2's values, and each model profile carries its own. The schema cache format bumped, so the next run re-reads it from the device
 - Predicted LED positions report as "predicted" rather than "confirmed". The prediction assumes the input indicators come first, which is wrong on the Scarlett Solo; run `focusmute-cli map` to confirm the indices on an unprofiled device
 - The Linux udev rule grants the `audio` group access (mode `0660`) instead of making the device node world-writable. On systems without logind, `sudo usermod -aG audio "$USER"` is now needed

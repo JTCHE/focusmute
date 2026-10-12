@@ -311,14 +311,14 @@ Audio Backend ---poll---> MuteIndicator ---action---> LED ops ---USB---> Device
 ### Prerequisites
 
 - Rust toolchain (stable)
-- **Linux:** `libpulse-dev`, `pkg-config`, `libasound2-dev`, `libgtk-3-dev`, `libxdo-dev`, `libappindicator3-dev`, `libegl-dev`, `libssl-dev`
+- **Linux:** `libpulse-dev`, `pkg-config`, `libasound2-dev`, `libgtk-3-dev`, `libappindicator3-dev`, `libegl-dev`, `libssl-dev`
 - **Windows cross-compile:** `gcc-mingw-w64-x86-64`, `x86_64-pc-windows-gnu` target
 
 ### Build
 
 ```bash
 # Linux (native)
-sudo apt-get install libpulse-dev pkg-config libasound2-dev libgtk-3-dev libxdo-dev libappindicator3-dev libegl-dev libssl-dev
+sudo apt-get install libpulse-dev pkg-config libasound2-dev libgtk-3-dev libappindicator3-dev libegl-dev libssl-dev
 cargo build --release
 
 # Windows (cross-compile from Linux/WSL2)
