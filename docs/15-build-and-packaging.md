@@ -164,6 +164,7 @@ Triggers on tag push matching `v*` (e.g., `v0.2.0`).
 
 | Job | Runner | What it does |
 |-----|--------|--------------|
+| `version-check` | `ubuntu-latest` | Fails unless the tag matches both crates' `version`, since the MSI and `.deb` names and the binaries' reported version come from `Cargo.toml` |
 | `check` | `ubuntu-latest` | Same lint + test + audit gate as CI (must pass before builds start) |
 | `release-windows` | `windows-latest` | Build, `cargo-binstall` → `cargo-wix` → MSI installer. Uploads `.exe` (×2) + `.msi` |
 | `release-linux` | `ubuntu-latest` | Build, `cargo-binstall` → `cargo-deb` → `.deb` + `.tar.gz`. Uploads both |
