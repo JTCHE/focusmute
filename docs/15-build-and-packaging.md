@@ -156,7 +156,7 @@ Triggers on push to `main` and all pull requests.
 |-----|--------|--------------|
 | `check` | `ubuntu-latest` | `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo-deny-action` (advisory audit), `cargo test` |
 
-Installs `libpulse-dev`, `pkg-config`, `libasound2-dev`, `libgtk-3-dev`, `libxdo-dev`, `libappindicator3-dev` so clippy can analyze all platform code paths. Uses `EmbarkStudios/cargo-deny-action@v2` for dependency audit (no separate install step needed).
+Installs the Linux build libraries through the local `.github/actions/linux-deps` action, which the release Linux job shares. It refreshes the apt lists, then runs `cache-apt-pkgs-action` with an `apt-fast` shim that execs `apt-get`, so a failed download fails the step instead of caching an empty set. Uses `EmbarkStudios/cargo-deny-action` for the advisory audit (no separate install step needed).
 
 ### Release Workflow (`.github/workflows/release.yml`)
 
