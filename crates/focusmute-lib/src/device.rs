@@ -253,10 +253,10 @@ mod win_enum {
             {
                 // SAFETY: detail was just filled by SetupDiGetDeviceInterfaceDetailW.
                 let path = unsafe { extract_path(detail) };
-                if path.to_lowercase().ends_with("\\pal") {
-                    if let Some(result) = callback(path) {
-                        return Some(result);
-                    }
+                if path.to_lowercase().ends_with("\\pal")
+                    && let Some(result) = callback(path)
+                {
+                    return Some(result);
                 }
             }
         }

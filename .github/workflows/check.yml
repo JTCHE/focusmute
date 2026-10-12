@@ -16,6 +16,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@631a55b12751854ce901bb631d5902ceb48146f7 # stable
         with:
           components: rustfmt, clippy
+          targets: x86_64-pc-windows-gnu
 
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
@@ -29,6 +30,10 @@ jobs:
 
       - name: Clippy
         run: cargo clippy --all-targets -- -D warnings
+
+      # Type-checks the Windows-only code without linking, so no mingw is needed.
+      - name: Clippy (Windows)
+        run: cargo clippy --target x86_64-pc-windows-gnu --all-targets -- -D warnings
 
       - name: Audit advisories
         uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25 # v2.1.1

@@ -154,7 +154,7 @@ Triggers on push to `main` and all pull requests.
 
 | Job | Runner | What it does |
 |-----|--------|--------------|
-| `check` | `ubuntu-latest` | `cargo fmt --check`, `cargo clippy -- -D warnings`, `cargo-deny-action` (advisory audit), `cargo test` |
+| `check` | `ubuntu-latest` | `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings` for Linux and for `x86_64-pc-windows-gnu`, `cargo-deny-action` (advisory audit), `cargo test` |
 
 Installs the Linux build libraries through the local `.github/actions/linux-deps` action, which the release Linux job shares. It refreshes the apt lists, then runs `cache-apt-pkgs-action` with an `apt-fast` shim that execs `apt-get`, so a failed download fails the step instead of caching an empty set. Uses `EmbarkStudios/cargo-deny-action` for the advisory audit (no separate install step needed).
 
@@ -180,7 +180,7 @@ Uses `cargo-bins/cargo-binstall` (SHA-pinned) to download pre-built `cargo-wix` 
 
 ### Why Windows Release Runs on `windows-latest` (Not Cross-Compiled)
 
-The MSI installer uses WiX Toolset, which is Windows-only. While the binaries could be cross-compiled on Linux, `cargo wix` requires a Windows host. The CI check job runs lint, test, and audit on Linux. The release job uses native Windows for the full MSI pipeline.
+The MSI installer uses WiX Toolset, which is Windows-only. While the binaries could be cross-compiled on Linux, `cargo wix` requires a Windows host. The CI check job runs lint, test, and audit on Linux, plus clippy for the Windows target, which type-checks the Windows-only code without linking. The release job uses native Windows for the full MSI pipeline.
 
 ---
 [← Firmware Binary Analysis](14-firmware-binary-analysis.md) | [Index](README.md) | [Multi-Model Mute Design →](16-multi-model-mute-design.md)
