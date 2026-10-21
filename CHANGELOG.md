@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- On firmware 3.x (3.0.2452.0 on the Scarlett 2i2 4th Gen), Settings → About and `focusmute-cli status` showed a garbled device name and a wrong firmware version, and the model profile went undetected. Both the 2.x and 3.x header layouts are now read, and on 3.x the LED offsets always come from the device's schema
+
 ## [0.12.0] - 2026-10-12
 
 ### Added

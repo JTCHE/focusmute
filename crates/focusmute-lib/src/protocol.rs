@@ -196,7 +196,7 @@ pub fn swroot_to_usb_cmd(swroot_cmd: u32) -> Option<u32> {
     }
 }
 
-// ── Descriptor offsets (Scarlett 4th Gen, shared across models) ──
+// ── Descriptor offsets (Scarlett 2i2 4th Gen, firmware 2.x; 3.x moves them, see `HeaderLayout`) ──
 
 /// `enableDirectLEDMode` — u8 at this offset. 0=normal, 2=halo override.
 pub const OFF_ENABLE_DIRECT_LED: u32 = 77;
