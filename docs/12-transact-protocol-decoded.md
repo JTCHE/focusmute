@@ -335,7 +335,7 @@ For the Scarlett 2i2 4th Gen (fw 2.0.2417.0): `config_len=5333`, 6 pages, decomp
 
 ### Descriptor Header (Firmware Version)
 
-The descriptor starts with the firmware version and device name. Firmware 3.x prepends new APP_SPACE members, so the header has two layouts (2i2 4th Gen values; both from the device schema):
+The descriptor starts with the firmware version and device name. Firmware 3.x prepends new APP_SPACE members, so the header has two layouts (2i2 4th Gen values, from [device_firmware_schema.json](device_firmware_schema.json) and [device_firmware_schema_3.0.2452.0.json](device_firmware_schema_3.0.2452.0.json)):
 
 | Field | 2.x offset | 3.x offset | Size | 2.0.2417.0 | 3.0.2452.0 |
 |-------|-----------|-----------|------|------------|------------|
