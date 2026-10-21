@@ -335,23 +335,32 @@ For the Scarlett 2i2 4th Gen (fw 2.0.2417.0): `config_len=5333`, 6 pages, decomp
 
 ### Descriptor Header (Firmware Version)
 
-The first 16 bytes of the descriptor (offset 0) contain version information:
+The descriptor starts with the firmware version and device name. Firmware 3.x prepends new APP_SPACE members, so the header has two layouts (2i2 4th Gen values, from [device_firmware_schema.json](device_firmware_schema.json) and [device_firmware_schema_3.0.2452.0.json](device_firmware_schema_3.0.2452.0.json)):
 
-| Offset | Size | Field | Example Value |
-|--------|------|-------|---------------|
-| 0 | 4 | configSize (u32 LE) | 720 (0x2D0) |
-| 4 | 2 | versionMajor (u16 LE) | 2 |
-| 6 | 2 | versionMinor (u16 LE) | 0 |
-| 8 | 4 | versionStageRelease (u32 LE) | 2417 (0x971) — this is the build number |
-| 12 | 4 | versionBuildNr (u32 LE) | 0 (unused on 2i2 Gen 4) |
+| Field | 2.x offset | 3.x offset | Size | 2.0.2417.0 | 3.0.2452.0 |
+|-------|-----------|-----------|------|------------|------------|
+| configSize (u32 LE) | 0 | 0 | 4 | 720 (0x2D0) | 732 (0x2DC) |
+| videoCallModeEnabled (u8) | — | 4 | 1 | — | 0 |
+| streamingMode (u8) | — | 5 | 1 | — | 0 |
+| clipSafeParams | 512 | 8 | 12 | | |
+| versionMajor (u16 LE) | 4 | 20 | 2 | 2 | 3 |
+| versionMinor (u16 LE) | 6 | 22 | 2 | 0 | 0 |
+| versionStageRelease (u32 LE) | 8 | 24 | 4 | 2417 | 2452 |
+| versionBuildNr (u32 LE) | 12 | 28 | 4 | 0 | 0 |
+| compatibility (`buildTools` u8, `hwRevision` u32) | — | 32 | 8 | — | |
+| name (u8[32]) | 16 | 40 | 32 | | |
+
+Every member after `name` moved by +24 on 3.x (`directLEDColour` 84 → 108, `directLEDValues` 92 → 116, `selectedInput` 331 → 355, `LEDcolors` 384 → 408), except the block from `clipSafedroppeddB` to `frontPanelSleepTime`, which moved by +12 because `clipSafeParams` left it. DATA_NOTIFY event IDs are unchanged.
+
+`DeviceInfo::apply_header` reads the first 72 bytes and takes the layout whose `name` field holds a product name (`Scarlett ` followed by printable ASCII). Offset 16 on 3.x holds `clipSafeParams` bytes (`9A 99 19 00`); offset 40 on 2.x holds the name's tail (`3186a`). Model profile offsets were measured on 2.x, so on any other layout `DeviceContext` takes all offsets from the schema and refuses to run if the schema can't be read.
 
 **Confirmed by Focusmute CLI**: Scarlett 2i2 4th Gen reports firmware **2.0.2417.0** (matching FC2's display exactly). The Linux driver's minimum for this model is build 2115.
 
-The `versionStageRelease` field (offset 8) corresponds to the Linux driver's `firmware_version` integer — the build number printed as `"Firmware version %d\n"`. FC2 formats the version as `major.minor.stageRelease.buildNr`.
+The `versionStageRelease` field corresponds to the Linux driver's `firmware_version` integer — the build number printed as `"Firmware version %d\n"`. FC2 formats the version as `major.minor.stageRelease.buildNr`.
 
-### Device Name (offset 16, 32 bytes)
+### Device Name (32 bytes; offset 16 on 2.x, 40 on 3.x)
 
-The descriptor contains a null-terminated device name string at offset 16 (32 bytes max):
+The descriptor contains a null-terminated device name string (32 bytes max):
 
 ```
 "Scarlett 2i2 4th Gen-XXXXXXXX"
